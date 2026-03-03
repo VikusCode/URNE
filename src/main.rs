@@ -9,7 +9,9 @@ fn parseur(list : &mut [String]) {
 // }
 
 fn lecture() {
-    let paths = fs::read_dir("./").unwrap();
+    let paths = fs::read_dir("./src").unwrap();
+    let mut res: Vec<String> = Vec::new();
+    println!("{:?}", paths);
     for path in paths {
         println!("Name: {}", path.unwrap().path().display());
     }
