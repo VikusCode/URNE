@@ -27,6 +27,7 @@ fn parseur(list : &mut [String]) -> (Vec<Candidat>, Vec<Vec<char>>) {
     return (candidat, bdd);
 }
 
+// Maybe vérifier plus tard si une meilleure complexité existe
 fn plurality(mut candidat : Vec<Candidat>, bdd : &mut Vec<Vec<char>>) -> char {
     for bulletin in bdd {
         let premier = bulletin[0];
@@ -63,7 +64,7 @@ fn main() {
     // for cand in candidat {
     //     println!("{} {}", cand.0, cand.1);
     // }
-    println!("{:?}", bdd);
+    // println!("{:?}", bdd);
     println!("{}", plurality(candidat, &mut bdd));
 }
 
@@ -71,7 +72,3 @@ fn main() {
 
 // let mut participants: Vec<String> = Vec::new();
 // participants.push(String::from("Bonjour"));
-
-// for ligne in &lignes {
-//     println!("{}", ligne);
-// }
