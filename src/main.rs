@@ -3,9 +3,11 @@ use std::fs::read_to_string;
 
 mod plurality;
 mod trs;
+mod borda;
 
 use plurality::plurality;
 use trs::trs;
+use borda::borda;
 
 struct Candidat(String);
 
@@ -58,9 +60,11 @@ fn main() {
         eprintln!("Erreur : veuillez fournir un fichier scrutin en argument.");
         return;
     }
+    // Faudra m'expliquer comment tu utilises les args
     let mut lignes = read_lines(&args[1]);
     let (candidat, bdd) = parseur(&mut lignes);
     // On passe des références (&) : pas besoin de copier les candidats
     println!("Plurality: {}", plurality(&candidat, &bdd));
     println!("TRS: {}", trs(&candidat, &bdd));
+    println!("Borda: {}", borda(&candidat, &bdd));
 }
