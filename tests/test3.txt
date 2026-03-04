@@ -1,0 +1,8 @@
+Durand;Martin;Bernard
+Martin>Durand>Bernard
+Martin>Bernard>Durand
+Martin>Durand>Bernard
+Durand>Bernard>Martin
+Durand>Martin>Bernard
+Bernard>Durand>Martin
+Bernard>Martin>Durand

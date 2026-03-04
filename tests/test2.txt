@@ -1,0 +1,7 @@
+X ; Y ; Z
+X > Y > Z
+Y > X > Z
+Z > X > Y
+X > Z > Y
+Y > Z > X
+Z > Y > X

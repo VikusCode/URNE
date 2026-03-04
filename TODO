@@ -1,5 +1,4 @@
 -> Faire les méthodes de votes suivantes :
-    - TRS (Two-Round System)
     - IRV (Instant Runoff Voting)
     - Borda (laisse-le moi lui là)
     - Bucklin
@@ -10,3 +9,6 @@
     - Ensemble de Smith
     - Schulze
     - Smith + IRV
+
+    - mettre à jour le readme pour chaque nouvelle méthode implémentée 
+    - Voir le temps d'éxécution de chaque méthode
