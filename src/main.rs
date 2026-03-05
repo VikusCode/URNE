@@ -5,11 +5,13 @@ mod plurality;
 mod trs;
 mod irv;
 mod borda;
+mod bucklin;
 
 use plurality::plurality;
 use trs::trs;
 use irv::irv;
 use borda::borda;
+use bucklin::bucklin;
 
 struct Candidat(String);
 
@@ -77,4 +79,5 @@ fn main() {
     println!("TRS: {}", trs(&candidat, &bdd));
     println!("IRV: {}", irv(&candidat, &bdd));
     println!("Borda: {}", borda(&candidat, &bdd));
+    println!("Bucklin: {}", bucklin(&candidat, &bdd));
 }

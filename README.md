@@ -31,9 +31,11 @@ D
 
 ## Méthodes implémentées
 
-- **Plurality** — Le candidat avec le plus de voix en première position gagne.
-- **TRS** — Vote à deux tours. Majorité absolue au tour 1 sinon second tour entre les deux premiers.
-- **IRV** — Élimination successive du candidat avec le moins de voix jusqu'à majorité absolue.
+- **Plurality** — On regarde qui est classé 1er sur chaque bulletin. Celui qui apparaît le plus souvent en 1er gagne.
+- **TRS** — Tour 1 : on compte les 1ers choix. Si quelqu'un a plus de la moitié des voix, il gagne. Sinon, on garde les deux meilleurs et on refait un vote entre eux.
+- **IRV** — On compte les 1ers choix. Si personne n'a plus de 50%, on élimine le candidat avec le moins de voix (un seul par tour). Les bulletins qui votaient pour lui passent au candidat suivant encore en lice. On répète jusqu'à ce que quelqu'un dépasse 50%.
+- **Borda** — Chaque position dans le classement donne des points : le 1er choix reçoit le max de points, le 2e un peu moins, etc. Celui qui a le plus de points au total gagne.
+- **Bucklin** — Tour 1 : on compte les 1ers choix. Si personne n'a >50%, tour 2 : on ajoute les 2es choix aux scores. Tour 3 : on ajoute les 3es, etc. Dès que quelqu'un dépasse 50%, il gagne.
 
 ## Règle de départage
 
