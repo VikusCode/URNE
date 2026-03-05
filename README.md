@@ -11,6 +11,9 @@ OU
 
 
 (A LA FIN FAIRE: cargo install --path pour pouvoir lancer mon_prog nom_du_fichier.txt comme demandé sur le sujet)
+
+
+(AJOUTER --timing à la fin de la ligne pour lancer le mode avec timing activés)
 ```
 
 ## Format du fichier scrutin
@@ -36,6 +39,7 @@ D
 - **IRV** — On compte les 1ers choix. Si personne n'a plus de 50%, on élimine le candidat avec le moins de voix (un seul par tour). Les bulletins qui votaient pour lui passent au candidat suivant encore en lice. On répète jusqu'à ce que quelqu'un dépasse 50%.
 - **Borda** — Chaque position dans le classement donne des points : le 1er choix reçoit le max de points, le 2e un peu moins, etc. Celui qui a le plus de points au total gagne.
 - **Bucklin** — Tour 1 : on compte les 1ers choix. Si personne n'a >50%, tour 2 : on ajoute les 2es choix aux scores. Tour 3 : on ajoute les 3es, etc. Dès que quelqu'un dépasse 50%, il gagne.
+- **Copeland** — On fait tous les duels possibles entre candidats. Victoire = 2 pts, nul = 1 pt, défaite = 0 pt. Le plus de points gagne.
 
 ## Règle de départage
 

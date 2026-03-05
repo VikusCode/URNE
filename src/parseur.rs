@@ -45,8 +45,6 @@ pub fn parseur(fichier: &str) -> Result<(Vec<Candidat>, Vec<Vec<usize>>), ()> {
         erreur::erreur_parsing(fichier, 1, "aucun candidat trouvé dans l'en-tête");
         return Err(());
     }
-
-    // Pré-allouer bdd avec une estimation (on sait pas combien y'a de lignes, mais on réserve large)
     let nb_candidats = candidat.len();
     let mut bdd: Vec<Vec<usize>> = Vec::new();
 
