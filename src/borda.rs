@@ -1,6 +1,7 @@
 use crate::Candidat;
 
-pub fn borda(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
+// bdd contient des indices de candidats (usize) au lieu de noms (String)
+pub fn borda(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
     let mut scores: Vec<i32> = Vec::new();
     for _c in candidat {
         scores.push(0);
@@ -10,15 +11,11 @@ pub fn borda(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
         if bulletin.is_empty() {
             continue;
         }
+        // Le premier reçoit bulletin.len() points, le 2ème bulletin.len()-1, etc.
         let mut point = bulletin.len() as i32;
-        // On cherche quel candidat correspond au premier du bulletin
         for elt in bulletin {
-            for i in 0..candidat.len() {
-                if *elt == candidat[i].0 {
-                    scores[i] += point;
-                    point -= 1;
-                }
-            }
+            scores[*elt] += point;
+            point -= 1;
         }
     }
     

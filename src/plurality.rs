@@ -1,7 +1,8 @@
 use crate::Candidat;
 
 // Maybe vérifier plus tard si une meilleure complexité existe
-pub fn plurality(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
+// bdd contient des indices de candidats (usize) au lieu de noms (String)
+pub fn plurality(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
     let mut scores: Vec<i32> = Vec::new();
     for _c in candidat {
         scores.push(0);
@@ -11,13 +12,9 @@ pub fn plurality(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
         if bulletin.is_empty() {
             continue;
         }
-        let premier = &bulletin[0];
-        // On cherche quel candidat correspond au premier du bulletin
-        for i in 0..candidat.len() {
-            if *premier == candidat[i].0 {
-                scores[i] += 1;
-            }
-        }
+        // bulletin[0] est directement l'indice du candidat en première position
+        let premier = bulletin[0];
+        scores[premier] += 1;
     }
 
     // Trouver max égalité 

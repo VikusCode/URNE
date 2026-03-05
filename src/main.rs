@@ -3,17 +3,19 @@ use std::fs::read_to_string;
 
 mod plurality;
 mod trs;
+mod irv;
 mod borda;
 
 use plurality::plurality;
 use trs::trs;
+use irv::irv;
 use borda::borda;
 
 struct Candidat(String);
 
-fn parseur(list : &mut [String]) -> (Vec<Candidat>, Vec<Vec<String>>) {
+fn parseur(list : &mut [String]) -> (Vec<Candidat>, Vec<Vec<usize>>) {
     let mut candidat: Vec<Candidat> = Vec::new();
-    let mut bdd: Vec<Vec<String>> = Vec::new();
+    let mut bdd: Vec<Vec<usize>> = Vec::new();
 
     // En-tête : on split par ';' et on trim les espaces
     let morceaux: Vec<&str> = list[0].split(';').collect();
@@ -25,17 +27,24 @@ fn parseur(list : &mut [String]) -> (Vec<Candidat>, Vec<Vec<String>>) {
         }
     }
 
-    // Bulletins:on split par '>' et on trim les espaces (Syntaxe formelle de l'énoncé)
+    // Bulletins : on split par '>' et on trim les espaces (Syntaxe formelle de l'énoncé)
+    // On convertit chaque nom en indice du candidat pour éviter de chercher à chaque fois
     for l in &list[1..list.len()] {
-        let mut bulletin: Vec<String> = Vec::new();
+        let mut bulletin: Vec<usize> = Vec::new();
         if l.trim().is_empty() {
             continue;
         }
         let morceaux: Vec<&str> = l.split('>').collect();
         for m in morceaux {
-            let nom = m.trim().to_string();
+            let nom = m.trim();
             if !nom.is_empty() {
-                bulletin.push(nom);
+                // Chercher l'indice du candidat
+                for i in 0..candidat.len() {
+                    if nom == candidat[i].0 {
+                        bulletin.push(i);
+                        break;
+                    }
+                }
             }
         }
         bdd.push(bulletin);
@@ -66,5 +75,6 @@ fn main() {
     // On passe des références (&) : pas besoin de copier les candidats
     println!("Plurality: {}", plurality(&candidat, &bdd));
     println!("TRS: {}", trs(&candidat, &bdd));
+    println!("IRV: {}", irv(&candidat, &bdd));
     println!("Borda: {}", borda(&candidat, &bdd));
 }

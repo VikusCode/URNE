@@ -33,6 +33,7 @@ D
 
 - **Plurality** — Le candidat avec le plus de voix en première position gagne.
 - **TRS** — Vote à deux tours. Majorité absolue au tour 1 sinon second tour entre les deux premiers.
+- **IRV** — Élimination successive du candidat avec le moins de voix jusqu'à majorité absolue.
 
 ## Règle de départage
 

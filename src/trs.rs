@@ -1,6 +1,7 @@
 use crate::Candidat;
 
-pub fn trs(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
+// bdd contient des indices de candidats (usize) au lieu de noms (String)
+pub fn trs(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
     // Tour 1 
     let mut scores: Vec<i32> = Vec::new();
     for _c in candidat {
@@ -9,12 +10,9 @@ pub fn trs(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
 
     for bulletin in bdd {
         if !bulletin.is_empty() {
-            let premier = &bulletin[0];
-            for i in 0..candidat.len() {
-                if *premier == candidat[i].0 {
-                    scores[i] += 1;
-                }
-            }
+            // bulletin[0] est directement l'indice du candidat en première position
+            let premier = bulletin[0];
+            scores[premier] += 1;
         }
     }
 
@@ -43,11 +41,12 @@ pub fn trs(candidat : &Vec<Candidat>, bdd : &Vec<Vec<String>>) -> String {
     let mut s1 = 0;
     let mut s2 = 0;
     for bulletin in bdd {
+        // Parcourir le bulletin : le premier finaliste rencontré reçoit le vote
         for c in bulletin {
-            if *c == candidat[i1].0 {
+            if *c == i1 {
                 s1 += 1;
                 break;
-            } else if *c == candidat[i2].0 {
+            } else if *c == i2 {
                 s2 += 1;
                 break;
             }
