@@ -10,6 +10,9 @@ mod borda;
 mod bucklin;
 mod condorcet;
 mod copeland;
+mod copeland_borda;
+mod smith;
+mod smith_irv;
 
 use plurality::plurality;
 use trs::trs;
@@ -79,6 +82,14 @@ fn main() {
     let debut = Instant::now();
     println!("Copeland: {}", copeland::copeland(&candidat, &duels));
     if timing { eprintln!("[TIMING] Copeland : {:.6}s", debut.elapsed().as_secs_f64()); }
+
+    let debut = Instant::now();
+    println!("Copeland+Borda: {}", copeland_borda::copeland_borda(&candidat, &bdd, &duels));
+    if timing { eprintln!("[TIMING] Copeland+Borda : {:.6}s", debut.elapsed().as_secs_f64()); }
+
+    let debut = Instant::now();
+    println!("Smith+IRV: {}", smith_irv::smith_irv(&candidat, &bdd, &duels));
+    if timing { eprintln!("[TIMING] Smith+IRV : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     if timing {
         eprintln!("[TIMING] Total : {:.6}s", debut_total.elapsed().as_secs_f64());

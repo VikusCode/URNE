@@ -40,6 +40,8 @@ D
 - **Borda** — Chaque position dans le classement donne des points : le 1er choix reçoit le max de points, le 2e un peu moins, etc. Celui qui a le plus de points au total gagne.
 - **Bucklin** — Tour 1 : on compte les 1ers choix. Si personne n'a >50%, tour 2 : on ajoute les 2es choix aux scores. Tour 3 : on ajoute les 3es, etc. Dès que quelqu'un dépasse 50%, il gagne.
 - **Copeland** — On fait tous les duels possibles entre candidats. Victoire = 2 pts, nul = 1 pt, défaite = 0 pt. Le plus de points gagne.
+- **Copeland+Borda** — Même chose que Copeland, mais en cas d'égalité au score Copeland, on départage avec le score Borda (points par position dans le classement).
+- **Smith+IRV** — On calcule l'ensemble de Smith (le plus petit groupe de candidats qui battent tous les autres). Puis on applique IRV à l'intérieur de ce groupe : on élimine un par un celui avec le moins de 1ers choix jusqu'à trouver un gagnant de Condorcet.
 
 ## Règle de départage
 
