@@ -6,11 +6,6 @@ pub fn baldwin(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
     for _c in candidat {
         en_lice.push(true);
     }
-    // Position courante dans chaque bulletin (pour ne pas re-parcourir les éliminés)
-    let mut pos: Vec<usize> = Vec::new();
-    for _b in bdd {
-        pos.push(0);
-    }
     loop {
         // Compter les voix en première position (parmi les candidats encore en lice)
         let mut scores: Vec<i32> = Vec::new();
@@ -18,15 +13,16 @@ pub fn baldwin(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
             scores.push(0);
         }
         for b in 0..bdd.len() {
-            let mut points = bdd[b].len() as i32;
+            let mut points = 1;
+            let mut taille = bdd[b].len() - 1;
             // Avancer tant que le bulletin n'est pas totalement déroulé
-            while pos[b] < bdd[b].len() {
-                // Si on a trouvé un candidat encore en lice, compter sa voix
-                if en_lice[bdd[b][pos[b]]] {
-                    scores[bdd[b][pos[b]]] += points;
+            loop {
+                if en_lice[bdd[b][taille]] {
+                    scores[bdd[b][taille]] += points;
+                    points += 1;
                 }
-                pos[b] += 1;
-                points -= 1;
+                if taille == 0 { break; }
+                taille -= 1;
             }
         }
         // Compter le total des suffrages exprimés (bulletins qui ont au moins un candidat en lice)
@@ -78,5 +74,6 @@ pub fn baldwin(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
         }
         // Éliminer ce candidat
         en_lice[elimine] = false;
+        println!("----------");
     }
 }

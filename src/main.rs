@@ -20,7 +20,6 @@ use trs::trs;
 use irv::irv;
 use borda::borda;
 use bucklin::bucklin;
-use baldwin::baldwin;
 
 pub struct Candidat(String);
 
