@@ -1,10 +1,6 @@
 -> Faire les méthodes de votes suivantes :
     - Baldwin -> Je te le laisse 
-
-    - Copeland + Borda
-    - Ensemble de Smith
     - Schulze
-    - Smith + IRV
 
     - mettre à jour le readme pour chaque nouvelle méthode implémentée 
     - Voir le temps d'éxécution de chaque méthode

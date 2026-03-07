@@ -13,12 +13,14 @@ mod copeland;
 mod copeland_borda;
 mod smith;
 mod smith_irv;
+mod baldwin;
 
 use plurality::plurality;
 use trs::trs;
 use irv::irv;
 use borda::borda;
 use bucklin::bucklin;
+use baldwin::baldwin;
 
 pub struct Candidat(String);
 
@@ -90,6 +92,10 @@ fn main() {
     let debut = Instant::now();
     println!("Smith+IRV: {}", smith_irv::smith_irv(&candidat, &bdd, &duels));
     if timing { eprintln!("[TIMING] Smith+IRV : {:.6}s", debut.elapsed().as_secs_f64()); }
+
+    let debut = Instant::now();
+    println!("Baldwin: {}", baldwin::baldwin(&candidat, &bdd));
+    if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     if timing {
         eprintln!("[TIMING] Total : {:.6}s", debut_total.elapsed().as_secs_f64());
