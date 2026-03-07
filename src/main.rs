@@ -14,6 +14,7 @@ mod copeland_borda;
 mod smith;
 mod smith_irv;
 mod baldwin;
+mod schulze;
 
 use plurality::plurality;
 use trs::trs;
@@ -95,6 +96,10 @@ fn main() {
     let debut = Instant::now();
     println!("Baldwin: {}", baldwin::baldwin(&candidat, &bdd));
     if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
+
+    let debut = Instant::now();
+    println!("Schulze: {}", schulze::schulze(&candidat, &duels));
+    if timing { eprintln!("[TIMING] Schulze : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     if timing {
         eprintln!("[TIMING] Total : {:.6}s", debut_total.elapsed().as_secs_f64());

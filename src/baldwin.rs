@@ -30,7 +30,6 @@ pub fn baldwin(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
         for i in 0..candidat.len() {
             if en_lice[i] {
                 total += scores[i];
-                println!("{}", scores[i]);
             }
         }
         let majorite = total / 2 + 1;
@@ -74,6 +73,5 @@ pub fn baldwin(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
         }
         // Éliminer ce candidat
         en_lice[elimine] = false;
-        println!("----------");
     }
 }
