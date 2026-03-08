@@ -76,6 +76,10 @@ fn main() {
     println!("Bucklin: {}", bucklin(&candidat, &bdd));
     if timing { eprintln!("[TIMING] Bucklin : {:.6}s", debut.elapsed().as_secs_f64()); }
 
+    let debut = Instant::now();
+    println!("Baldwin: {}", baldwin::baldwin(&candidat, &bdd));
+    if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
+
     // Calcul de la matrice des duels (utilisée par toutes les méthodes Condorcet)
     let debut = Instant::now();
     let duels = condorcet::matrice_duels(&candidat, &bdd);
@@ -90,16 +94,12 @@ fn main() {
     if timing { eprintln!("[TIMING] Copeland+Borda : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     let debut = Instant::now();
-    println!("Smith+IRV: {}", smith_irv::smith_irv(&candidat, &bdd, &duels));
-    if timing { eprintln!("[TIMING] Smith+IRV : {:.6}s", debut.elapsed().as_secs_f64()); }
-
-    let debut = Instant::now();
-    println!("Baldwin: {}", baldwin::baldwin(&candidat, &bdd));
-    if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
-
-    let debut = Instant::now();
     println!("Schulze: {}", schulze::schulze(&candidat, &duels));
     if timing { eprintln!("[TIMING] Schulze : {:.6}s", debut.elapsed().as_secs_f64()); }
+
+    let debut = Instant::now();
+    println!("Smith+IRV: {}", smith_irv::smith_irv(&candidat, &bdd, &duels));
+    if timing { eprintln!("[TIMING] Smith+IRV : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     if timing {
         eprintln!("[TIMING] Total : {:.6}s", debut_total.elapsed().as_secs_f64());
