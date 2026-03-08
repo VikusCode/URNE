@@ -76,14 +76,14 @@ fn main() {
     println!("Bucklin: {}", bucklin(&candidat, &bdd));
     if timing { eprintln!("[TIMING] Bucklin : {:.6}s", debut.elapsed().as_secs_f64()); }
 
-    let debut = Instant::now();
-    println!("Baldwin: {}", baldwin::baldwin(&candidat, &bdd));
-    if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
-
-    // Calcul de la matrice des duels (utilisée par toutes les méthodes Condorcet)
+    // Calcul de la matrice des duels (utilisée par Baldwin et toutes les méthodes Condorcet)
     let debut = Instant::now();
     let duels = condorcet::matrice_duels(&candidat, &bdd);
     if timing { eprintln!("[TIMING] Matrice duels : {:.6}s", debut.elapsed().as_secs_f64()); }
+
+    let debut = Instant::now();
+    println!("Baldwin: {}", baldwin::baldwin(&candidat, &duels));
+    if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     let debut = Instant::now();
     println!("Copeland: {}", copeland::copeland(&candidat, &duels));

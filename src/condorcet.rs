@@ -4,43 +4,50 @@ use crate::Candidat;
 // Un candidat i est préféré à j si i apparaît avant j dans le bulletin
 pub fn matrice_duels(candidat: &Vec<Candidat>, bdd: &Vec<Vec<usize>>) -> Vec<Vec<i32>> {
     let n = candidat.len();
-    // Créer la matrice n x n initialisée à 0
-    let mut duels: Vec<Vec<i32>> = Vec::new();
+
+    // a[i][j] = nombre de bulletins où i est classé avant j (les deux présents)
+    let mut a: Vec<Vec<i32>> = Vec::new();
     for _i in 0..n {
         let mut ligne: Vec<i32> = Vec::new();
         for _j in 0..n {
             ligne.push(0);
         }
-        duels.push(ligne);
+        a.push(ligne);
     }
 
-    // Pour chaque bulletin, tous les candidats qui apparaissent avant un autre
-    // sont préférés à ce dernier
-    // Les candidats absents du bulletin sont considérés comme classés après tous ceux présents
+    // has[i] = nombre de bulletins contenant le candidat i
+    let mut has: Vec<i32> = Vec::new();
+    for _i in 0..n {
+        has.push(0);
+    }
+
     for bulletin in bdd {
-        // Pour chaque paire (i, j) dans le bulletin : i est préféré à j
+        // Compter les apparitions
+        for c in bulletin {
+            has[*c] += 1;
+        }
+        // Pour chaque paire ordonnée dans le bulletin
         for pos_i in 0..bulletin.len() {
             for pos_j in (pos_i + 1)..bulletin.len() {
-                duels[bulletin[pos_i]][bulletin[pos_j]] += 1;
+                a[bulletin[pos_i]][bulletin[pos_j]] += 1;
             }
         }
-        // Les candidats présents dans le bulletin sont aussi préférés
-        // à ceux qui n'y sont pas du tout
-        // On utilise un tableau "present" pour savoir qui est dans le bulletin
-        let mut present: Vec<bool> = Vec::new();
-        for _i in 0..n {
-            present.push(false);
-        }
-        for c in bulletin {
-            present[*c] = true;
-        }
-        for c in bulletin {
-            for j in 0..n {
-                if !present[j] {
-                    duels[*c][j] += 1;
-                }
+    }
+
+    // duels[i][j] = has[i] - a[j][i]
+    // = (bulletins où i présent et j classé avant i sont soustraits)
+    // = (bulletins où i avant j) + (bulletins où i présent et j absent)
+    let mut duels: Vec<Vec<i32>> = Vec::new();
+    for i in 0..n {
+        let mut ligne: Vec<i32> = Vec::new();
+        for j in 0..n {
+            if i == j {
+                ligne.push(0);
+            } else {
+                ligne.push(has[i] - a[j][i]);
             }
         }
+        duels.push(ligne);
     }
 
     duels

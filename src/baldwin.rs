@@ -1,77 +1,46 @@
 use crate::Candidat;
 
-pub fn baldwin(candidat : &Vec<Candidat>, bdd : &Vec<Vec<usize>>) -> String {
-    // Liste des candidats encore en lice (true = encore présent)
+// Baldwin : Borda itératif, on élimine le candidat avec le plus faible score Borda à chaque tour.
+// Astuce : score Borda de i = somme de duels[i][j] pour tous j en lice (j != i)
+pub fn baldwin(candidat : &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
+    let n = candidat.len();
     let mut en_lice: Vec<bool> = Vec::new();
     for _c in candidat {
         en_lice.push(true);
     }
+    let mut nb_en_lice = n;
+
     loop {
-        // Compter les voix en première position (parmi les candidats encore en lice)
-        let mut scores: Vec<i32> = Vec::new();
-        for _c in candidat {
-            scores.push(0);
-        }
-        for b in 0..bdd.len() {
-            let mut points = 1;
-            let mut taille = bdd[b].len() - 1;
-            // Avancer tant que le bulletin n'est pas totalement déroulé
-            loop {
-                if en_lice[bdd[b][taille]] {
-                    scores[bdd[b][taille]] += points;
-                    points += 1;
-                }
-                if taille == 0 { break; }
-                taille -= 1;
-            }
-        }
-        // Compter le total des suffrages exprimés (bulletins qui ont au moins un candidat en lice)
-        let mut total = 0;
-        for i in 0..candidat.len() {
-            if en_lice[i] {
-                total += scores[i];
-            }
-        }
-        let majorite = total / 2 + 1;
-        // Vérifier si un candidat a la majorité absolue
-        for i in 0..candidat.len() {
-            if en_lice[i] && scores[i] >= majorite {
-                return candidat[i].0.clone();
-            }
-        }
-        // Compter combien de candidats sont encore en lice
-        let mut nb_en_lice = 0;
-        for i in 0..candidat.len() {
-            if en_lice[i] {
-                nb_en_lice += 1;
-            }
-        }
-        // S'il ne reste qu'un seul candidat, il gagne
         if nb_en_lice <= 1 {
-            for i in 0..candidat.len() {
+            for i in 0..n {
                 if en_lice[i] {
                     return candidat[i].0.clone();
                 }
             }
         }
-        // Trouver le score minimum parmi les candidats encore en lice
+
+        // Calculer les scores Borda via la matrice des duels
+        // score_borda(i) = somme de duels[i][j] pour j en lice, j != i
         let mut min_score = i32::MAX;
-        for i in 0..candidat.len() {
-            if en_lice[i] && scores[i] < min_score {
-                min_score = scores[i];
-            }
-        }
-        // Parmi ceux qui ont le score minimum, éliminer celui avec le plus grand nom (lexico)
-        // Car en cas d'égalité on garde le plus petit en lexico = on élimine le plus grand
         let mut elimine = usize::MAX;
-        for i in 0..candidat.len() {
-            if en_lice[i] && scores[i] == min_score {
-                if elimine == usize::MAX || candidat[i].0 > candidat[elimine].0 {
-                    elimine = i;
+
+        for i in 0..n {
+            if !en_lice[i] {
+                continue;
+            }
+            let mut score = 0;
+            for j in 0..n {
+                if j != i && en_lice[j] {
+                    score += duels[i][j];
                 }
             }
+            if score < min_score || (score == min_score && candidat[i].0 > candidat[elimine].0) {
+                min_score = score;
+                elimine = i;
+            }
         }
-        // Éliminer ce candidat
+
         en_lice[elimine] = false;
+        nb_en_lice -= 1;
     }
 }
