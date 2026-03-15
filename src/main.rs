@@ -82,7 +82,7 @@ fn main() {
     if timing { eprintln!("[TIMING] Matrice duels : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     let debut = Instant::now();
-    println!("Baldwin: {}", baldwin::baldwin(&candidat, &duels));
+    println!("Baldwin: {}", baldwin::baldwin(&candidat, &bdd));
     if timing { eprintln!("[TIMING] Baldwin : {:.6}s", debut.elapsed().as_secs_f64()); }
 
     let debut = Instant::now();

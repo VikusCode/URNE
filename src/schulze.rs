@@ -1,13 +1,14 @@
 use crate::Candidat;
 
 #[derive(Clone)]
-pub struct Match(i32, i32);
+pub struct Match(i32, i32, i32);
 
 pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
     // 1) Construire l'ensemble de Smith
     let en_lice = crate::smith::ensemble_smith(duels);
     let mut candidat_smith: Vec<Candidat> = Vec::new();
     let mut les_matchs: Vec<Match> = Vec::new();
+    let indices_smith: Vec<usize> = (0..en_lice.len()).filter(|&i| en_lice[i]).collect();
 
     let mut n = 0;
     for boolean in 0..en_lice.len() {
@@ -23,16 +24,18 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
         scores.push(0);
     }
 
-    for i in 0..n {
-        for j in (i + 1)..n {
+    for i1 in 0..n {
+        for j1 in (i1 + 1)..n {
+            let i = indices_smith[i1];
+            let j = indices_smith[j1];
             if duels[i][j] > duels[j][i] {
-                les_matchs.push(Match(j as i32, duels[i][j] - duels[j][i]));
-                scores[i] += 1; // i bat j
+                les_matchs.push(Match(j1 as i32, duels[i][j] - duels[j][i], i1 as i32));
+                scores[i1] += 1; // i bat j
             } else if duels[i][j] < duels[j][i] {
-                scores[j] += 1; // j bat i
-                les_matchs.push(Match(i as i32, duels[j][i] - duels[i][j]));
+                scores[j1] += 1; // j bat i
+                les_matchs.push(Match(i1 as i32, duels[j][i] - duels[i][j], j1 as i32));
             } else {
-                les_matchs.push(Match(-1, 0)) // si nul, on ne fait rien
+                les_matchs.push(Match(-1, 0, -1)) // si nul, on ne fait rien
             }
         }   
     }
@@ -53,20 +56,26 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
                 match_restants.push(confront.clone());
             }
         }
+
         let mut perdants: Vec<usize> = Vec::new();
+        let mut gagnants: Vec<usize> = Vec::new();
         for confront in &match_restants {
             let indice = confront.0 as usize;
+            let part = confront.2 as usize;
             if !perdants.contains(&indice) {
                 perdants.push(indice);
             }
-        }
-        if perdants.len() == candidat_smith.len() - 1 {
-            for compteur in 0..candidat_smith.len() {
-                if !perdants.contains(&compteur) {
-                    return candidat_smith[compteur].0.clone();
-                }
+            if !gagnants.contains(&part) {
+                gagnants.push(part);
             }
         }
+
+        for win in 0..n {
+            if !perdants.contains(&win) {
+                return candidat_smith[win].0.clone();
+            }
+        }
+
         les_matchs = match_restants;
     }
 }

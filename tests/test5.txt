@@ -1,0 +1,12 @@
+Durand;Martin;Bernard;Antoine
+Antoine>Bernard>Durand>Martin
+Durand>Martin>Antoine>Bernard
+Bernard>Antoine>Martin>Durand
+Martin>Durand>Antoine>Bernard
+Antoine>Martin>Bernard>Durand
+Durand>Bernard>Antoine>Martin
+Martin>Antoine>Durand>Bernard
+Bernard>Durand>Martin>Antoine
+Antoine>Durand>Martin>Bernard
+Martin>Bernard>Durand>Antoine
+Bernard>Durand>Martin>Antoine
