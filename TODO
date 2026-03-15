@@ -1,9 +1,0 @@
--> Faire les méthodes de votes suivantes :
-    - Schulze
-
-    - mettre à jour le readme pour chaque nouvelle méthode implémentée 
-    - Voir le temps d'éxécution de chaque méthode
-    - Ajouter des messages d'erreurs, voir les possibles erreurs ? (erreur de lecture de fichier, erreur de programme etc il faut quelque chose d'explicite donc surement format [TYPE ERREUR]: [DESCRIPTION ERREUR AVEC NOM DU FICHIER OU DU PROGRAMME QUI BUG])
-    - ltsp (c'est perso)
-    - Voir le temps d'éxécution de chaque méthode et voir aussi si sur un gros fichier comment on reçoit les données est pas trop long
-

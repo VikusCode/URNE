@@ -10,6 +10,8 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
     let mut les_matchs: Vec<Match> = Vec::new();
     let indices_smith: Vec<usize> = (0..en_lice.len()).filter(|&i| en_lice[i]).collect();
 
+
+    // 2) Compter le nombre de candidats de Smith
     let mut n = 0;
     for boolean in 0..en_lice.len() {
         let cand = Candidat(candidat[boolean].0.clone());
@@ -24,6 +26,7 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
         scores.push(0);
     }
 
+    // 3) On calcule chaque match avec chaque participant de Smith
     for i1 in 0..n {
         for j1 in (i1 + 1)..n {
             let i = indices_smith[i1];
@@ -43,6 +46,8 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
     loop {
         let mut min = i32::MAX;
         let mut match_restants: Vec<Match> = Vec::new();
+
+        // 4) On calcule l'écart le plus petit sur les résultats des matchs
         for confront in &les_matchs {
             if confront.1 >= 0 && min > confront.1 {
                 min = confront.1;
@@ -51,12 +56,15 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
         if min == i32::MAX {
             return candidat_smith[0].0.clone();
         }
+
+        // 5) On compte uniquement les matchs plus grands que l'écart minimum
         for confront in &les_matchs {
             if confront.1 != min {
                 match_restants.push(confront.clone());
             }
         }
 
+        // 6) On remplit les perdants et les gagnants
         let mut perdants: Vec<usize> = Vec::new();
         let mut gagnants: Vec<usize> = Vec::new();
         for confront in &match_restants {
@@ -70,6 +78,7 @@ pub fn schulze(candidat: &Vec<Candidat>, duels: &Vec<Vec<i32>>) -> String {
             }
         }
 
+        // 7) Si un candidat n'est plus dans les perdants, c'est qu'il gagne contre tout le monde et est déclaré vainqueur, sinon on recommence la boucle
         for win in 0..n {
             if !perdants.contains(&win) {
                 return candidat_smith[win].0.clone();

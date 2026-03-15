@@ -42,6 +42,7 @@ D
 - **Baldwin** — A chaque tour, nous appliquons la méthode de Borda, qui nous donne un classement à la fin. Celui qui a le moins de points à la fin du tour est éliminé, puis on recommence cette méthode jusqu'à avoir soit une majorité absolue, soit un vainqueur seul au bout de tous les tours.
 - **Copeland** — On fait tous les duels possibles entre candidats. Victoire = 2 pts, nul = 1 pt, défaite = 0 pt. Le plus de points gagne.
 - **Copeland+Borda** — Même chose que Copeland, mais en cas d'égalité au score Copeland, on départage avec le score Borda (points par position dans le classement).
+- **Smith+IRV** — On calcule l'ensemble de Smith. Puis nous faisons tous les duels entre candidats et gardons les écarts entre adversaires. À chaque tour, on enlève les matchs avec le plus petit écart. Si un candidat ne perds contre personne, il est déclaré vainqueur, sinon on recommence un nouveau tour.
 - **Smith+IRV** — On calcule l'ensemble de Smith (le plus petit groupe de candidats qui battent tous les autres). Puis on applique IRV à l'intérieur de ce groupe : on élimine un par un celui avec le moins de 1ers choix jusqu'à trouver un gagnant de Condorcet.
 
 ## Règle de départage
