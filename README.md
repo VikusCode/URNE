@@ -1,5 +1,7 @@
 # Projet URNE
 
+## Fait par Yaël Muselet Dumont et Nolan Desumeur
+
 ## Utilisation
 
 ```
